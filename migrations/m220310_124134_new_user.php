@@ -25,10 +25,13 @@ class m220310_124134_new_user extends Migration
                 'email' => $this->string(40)->notNull()->unique(),
                 'address' => $this->string(30)->notNull(),
                 'phone' => $this->integer()->notNull(),
-                'password' => $this->string(80)->notNull(),
+                'auth_key' => $this->string(32)->notNull(),
+                'password_hash' => $this->string()->notNull(),
+                'password_reset_token' => $this->string()->unique(),
+                'created_at' => $this->integer()->notNull(),
+                'updated_at' => $this->integer()->notNull(),
                 'status' => $this->smallInteger()->notNull()->defaultValue(10),
                 'role' => $this->smallInteger()->notNull()->defaultValue(4),
-                'auth_key' => $this->string(32)->notNull(),
             ], $tableOptions);
     }
 

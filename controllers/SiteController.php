@@ -9,7 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-//use app\models\NewUser;
+
 use app\models\SignupForm;
 
 class SiteController extends Controller
@@ -133,32 +133,6 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionRegister()
-    {
-        $model = new NewUser();
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                // form inputs are valid, do something here
-                $model->name = $_POST['NewUser']['name'];
-                $model->lastName = $_POST['NewUser']['lastName'];
-                $model->username = $_POST['NewUser']['username'];
-                $model->email = $_POST['NewUser']['email'];
-                $model->address = $_POST['NewUser']['address'];
-                $model->phone = $_POST['NewUser']['phone'];
-                $model->password = $_POST['NewUser']['password'];
-                $model-> authKey = md5(random_bytes(5));
-                return $this->redirect(['login']);
-                if($model->save()) {
-                    return $this->redirect(['login']);
-                }
-            }
-        }
-
-        return $this->render('register', [
-            'model' => $model,
-        ]);
-    }
 
     /************************* */
     public function actionSignup()

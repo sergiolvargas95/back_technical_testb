@@ -40,7 +40,7 @@ AppAsset::register($this);
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
         if(Yii::$app->user->isGuest){
-            array_push($navItem, ['label' => 'Login', 'url' => ['/site/login']], ['label' => 'Register', 'url' => ['/site/register']]);
+            array_push($navItem, ['label' => 'Login', 'url' => ['/site/login']], ['label' => 'Register', 'url' => ['/site/signup']]);
         } else {
             array_push($navItem,'<li>'. Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline']). Html::submitButton('Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']).Html::endForm().'</li>');
         }
