@@ -6,6 +6,6 @@ use yii\rest\ActiveController;
 
 
 
-class ApiRegisterController extends ActiveController {
-    public $modelClass = 'app\models\SignupForm';
+class ApiregisterController extends ActiveController {
+    public $modelClass = 'app\models\User';
 }
