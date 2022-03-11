@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Product;
-use app\models\ProductSearch;
+use app\models\Register;
+use app\models\RegisterSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProductController implements the CRUD actions for Product model.
+ * RegisterController implements the CRUD actions for Register model.
  */
-class ProductController extends Controller
+class RegisterController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Lists all Product models.
+     * Lists all Register models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new RegisterSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,30 +48,30 @@ class ProductController extends Controller
     }
 
     /**
-     * Displays a single Product model.
-     * @param int $idProduct Id Product
+     * Displays a single Register model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idProduct)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idProduct),
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Product model.
+     * Creates a new Register model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new Register();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idProduct' => $model->idProduct]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -83,18 +83,18 @@ class ProductController extends Controller
     }
 
     /**
-     * Updates an existing Product model.
+     * Updates an existing Register model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $idProduct Id Product
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idProduct)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($idProduct);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idProduct' => $model->idProduct]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -103,29 +103,29 @@ class ProductController extends Controller
     }
 
     /**
-     * Deletes an existing Product model.
+     * Deletes an existing Register model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $idProduct Id Product
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idProduct)
+    public function actionDelete($id)
     {
-        $this->findModel($idProduct)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Product model based on its primary key value.
+     * Finds the Register model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $idProduct Id Product
-     * @return Product the loaded model
+     * @param int $id ID
+     * @return Register the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idProduct)
+    protected function findModel($id)
     {
-        if (($model = Product::findOne(['idProduct' => $idProduct])) !== null) {
+        if (($model = Register::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
