@@ -9,6 +9,7 @@ use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\web\Session;
 
 AppAsset::register($this);
 ?>
@@ -39,12 +40,16 @@ AppAsset::register($this);
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
         ['label' => 'Product', 'url' => ['/product/index']],
-        ['label' => 'shopping car', 'url' => ['/shoppingcar/index']],
+        ['label' => 'shopping car', 'url' => ['/shopping/index']],
+        ['label' => 'Orders', 'url' => ['/order/index']],
     ];
         if(Yii::$app->user->isGuest){
             array_push($navItem, ['label' => 'Login', 'url' => ['/site/login']], ['label' => 'Register', 'url' => ['/site/signup']]);
         } else {
             array_push($navItem,'<li>'. Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline']). Html::submitButton('Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']).Html::endForm().'</li>');
+            $session = Yii::$app->session;
+            $session->open(); // open a session
+            $session['id'] = date("Ymd");
         }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],

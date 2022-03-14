@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\web\Session;
 use Yii;
 
 /**
@@ -10,12 +11,14 @@ use Yii;
  * @property int $idShopping
  * @property int $idProduct
  * @property int $idUser
+ *  @property string $id_session
  *
  * @property Product $idProduct0
  * @property NewUser $idUser0
  */
 class Shopping extends \yii\db\ActiveRecord
 {
+    public $session;
     /**
      * {@inheritdoc}
      */
@@ -32,6 +35,7 @@ class Shopping extends \yii\db\ActiveRecord
         return [
             [['idProduct', 'idUser'], 'required'],
             [['idProduct', 'idUser'], 'integer'],
+            [['id_session'], 'string', 'max' => 255],
             [['idProduct'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['idProduct' => 'idProduct']],
             [['idUser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['idUser' => 'id']],
         ];
@@ -68,4 +72,9 @@ class Shopping extends \yii\db\ActiveRecord
     {
         return $this->hasOne(NewUser::className(), ['id' => 'idUser']);
     }
+
+    /**public function beforeSave($insert) {
+        $this->id_session = random_int(1, 30);
+        return true;
+    }**/
 }
