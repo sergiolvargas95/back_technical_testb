@@ -55,7 +55,12 @@ $config = [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'apiregister'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'apiproduct'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'apishopping'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'apiorder'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'apiorder',
+                    'extraPatterns'=>[
+                        'GET getall'=>'getall',
+                        'GET shipments'=>'shipments',
+                        'PUT delivery' =>'delivery',
+                    ]],
             ],
         ],
 

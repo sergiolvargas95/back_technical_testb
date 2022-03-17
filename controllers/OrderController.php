@@ -9,6 +9,7 @@ use yii\web\Controller;
 use app\models\Orders;
 
 class OrderController extends Controller {
+    //GET
     public function actionIndex($id) {
         //fetch all user order history
         $model = new Orders();
@@ -17,6 +18,7 @@ class OrderController extends Controller {
         return $models;
     }
 
+    //GET
     public function actionGetall() {
         //fetch all user orders that are on hold
         $model = new Orders();
@@ -33,7 +35,7 @@ class OrderController extends Controller {
             return $this->redirect(['index']);
         }
     }
-
+    //POST
     public function actionOrder($id) {
         //generate the order from the shopping cart
         $model = new Orders();
@@ -66,7 +68,7 @@ class OrderController extends Controller {
         $model->save();
         return $this->render('index', ['model' => $model]);
     }
-
+    //UPDATE
     public function actionCancel($id)
     {
         //the user can cancel the order as long as it has not been dispatched
@@ -81,7 +83,7 @@ class OrderController extends Controller {
         }
     }
 
-
+    //UPDATE
     public function actionUpdatestatus($id)
     {
         $model = Orders::findOne(['idOrder' => $id]);
@@ -102,7 +104,7 @@ class OrderController extends Controller {
             return $this->redirect(['index']);
         }
     }
-
+    //GET
     public function actionShipments($username) {
         $model = new Orders();
         $models = $model->findAll(['messenger' => $username]);
@@ -119,7 +121,7 @@ class OrderController extends Controller {
             return $this->redirect(['index']);
         }
     }
-
+    //UPDATE
     public function actionDelivered($id) {
         $model = Orders::findOne(['idOrder' => $id]);
         $roles = $model->Getrole(Yii::$app->user->id);
