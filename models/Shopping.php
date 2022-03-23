@@ -33,9 +33,8 @@ class Shopping extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idProduct', 'idUser'], 'required'],
-            [['idProduct', 'idUser'], 'integer'],
-            [['id_session'], 'string', 'max' => 255],
+            [['idProduct', 'idUser', 'quantity'], 'required'],
+            [['idProduct', 'idUser', 'quantity'], 'integer', 'min' => 1],
             [['idProduct'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['idProduct' => 'idProduct']],
             [['idUser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['idUser' => 'id']],
         ];
@@ -73,8 +72,4 @@ class Shopping extends \yii\db\ActiveRecord
         return $this->hasOne(NewUser::className(), ['id' => 'idUser']);
     }
 
-    /**public function beforeSave($insert) {
-        $this->id_session = random_int(1, 30);
-        return true;
-    }**/
 }

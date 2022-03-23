@@ -19,10 +19,11 @@ use yii\db\Query;
  */
 class Orders extends \yii\db\ActiveRecord
 {
-    const STATUS_IN_PROGRESS = 0;
-    const STATUS_DISPATCHED = 1;
-    const STATUS_RECEIVED = 2;
-    const STATUS_CANCELLED = 3;
+    const STATUS_IN_PROGRESS = 1;
+    const STATUS_DISPATCHED = 2;
+    const STATUS_RECEIVED = 3;
+    const STATUS_RETURNED = 4;
+    const STATUS_CANCELLED = 0;
 
     /**
      * {@inheritdoc}
@@ -38,10 +39,11 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status_request', 'status_distribution', 'totalPrice', 'idUser'], 'required'],
-            [['status_request', 'status_distribution', 'totalPrice', 'idUser'], 'integer'],
-            [['purchased_products'], 'string'],
+            [['totalPrice', 'idUser', 'purchased_products'], 'required'],
+            [['status_request', 'totalPrice', 'idUser'], 'integer', 'min' => 1],
+            [['purchased_products', 'messenger'], 'string'],
             [['idUser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['idUser' => 'id']],
+            ['status_request', 'default', 'value' => self::STATUS_IN_PROGRESS],
         ];
     }
 
@@ -53,10 +55,10 @@ class Orders extends \yii\db\ActiveRecord
         return [
             'idOrder' => Yii::t('app', 'Id Order'),
             'status_request' => Yii::t('app', 'Status Request'),
-            'status_distribution' => Yii::t('app', 'Status Distribution'),
             'purchased_products' => Yii::t('app', 'Purchased Products'),
             'totalPrice' => Yii::t('app', 'Total Price'),
             'idUser' => Yii::t('app', 'Id User'),
+            'messenger' => Yii::t('app', 'Messenger'),
         ];
     }
 

@@ -50,13 +50,15 @@ class Register extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'lastName', 'username', 'email', 'address', 'phone'], 'required'],
-            [['phone', 'created_at', 'updated_at', 'status', 'role'], 'integer'],
+            [['phone', 'created_at', 'updated_at', 'status', 'role'], 'integer', 'min' => 1],
             [['name', 'lastName', 'username'], 'string', 'max' => 20],
             [['email'], 'string', 'max' => 40],
             [['address'], 'string', 'max' => 30],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'verification_token'], 'string', 'max' => 255],
-            [['email'], 'unique'],
+            [['email'], 'email'],
+            [['email', 'username'], 'unique'],
+            [['name', 'lastName', 'username', 'email', 'address', 'phone'], 'trim'],
             [['password_reset_token'], 'unique'],
 
             ['password', 'required'],
