@@ -109,9 +109,9 @@ class ApiorderController extends ActiveController {
         if($roleUser == 2) {
             $attributes = \yii::$app->request->post();
             $orders = \app\models\Orders::find()
-            ->where(['idOrder' => $attributes['id']])->one();
+            ->where(['idOrder' => $attributes['idOrder']])->one();
             if($orders->status_request == self::STATUS_ON_WAY) {
-                $orders->attributes = \yii::$app->request->post(); //attributes[]
+                $orders->status_request = 4;
                 $orders->save();
                 return $orders;
             } else {
@@ -142,6 +142,8 @@ class ApiorderController extends ActiveController {
             } else {
                 return array('status' => false, 'data'=> 'Order record is NOT updated successfully');
             }
+        }  else {
+            return array('status' => false, 'data'=> 'you are not authorized to perform this action');
         }
     }
 
@@ -168,6 +170,8 @@ class ApiorderController extends ActiveController {
             } else {
                 return array('status' => false, 'data'=> 'Order record is NOT updated successfully');
             }
+        }  else {
+            return array('status' => false, 'data'=> 'you are not authorized to perform this action');
         }
     }
 
