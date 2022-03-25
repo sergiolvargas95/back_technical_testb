@@ -135,7 +135,7 @@ class ApiorderController extends ActiveController {
             $attributes = \yii::$app->request->post();
             $orders = \app\models\Orders::find()
             ->where(['idOrder' => $attributes['idOrder']])->one();
-            if($orders->status_request == self::STATUS_IN_PROGRESS) {
+            if($orders->status_request == self::STATUS_IN_PROGRESS && ($roleUser == 1 || $orders->idUser == Yii::$app->user->id)) {
                 $orders->status_request = 6;
                 $orders->save();
                 return $orders;
