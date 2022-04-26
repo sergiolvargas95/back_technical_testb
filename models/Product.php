@@ -32,9 +32,10 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'image', 'unitValue'], 'required'],
+            [['title', 'description', 'image', 'unitValue', 'discount', 'startDate', 'finalDate' ], 'required'],
             [['description'], 'string'],
-            [['unitValue'], 'integer'],
+            [['unitValue', 'discount'], 'integer'],
+            [['startDate', 'finalDate'], 'string'],
             [['title'], 'string', 'max' => 20],
             [['image'], 'string', 'max' => 200],
         ];
@@ -51,6 +52,9 @@ class Product extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'image' => Yii::t('app', 'Image'),
             'unitValue' => Yii::t('app', 'Unit Value'),
+            'discount' => Yii::t('app', 'Discount'),
+            'startDate' => Yii::t('app', 'Start Date'),
+            'finalDate' => Yii::t('app', 'Final Date'),
         ];
     }
 
