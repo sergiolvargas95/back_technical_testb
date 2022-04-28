@@ -102,7 +102,7 @@ class Register extends \yii\db\ActiveRecord
      */
     public function getOrders()
     {
-        return $this->hasMany(Order::className(), ['idUser' => 'id']);
+        return $this->hasMany(Order::class, ['idUser' => 'id']);
     }
 
     public function setPassword($password)
@@ -118,7 +118,7 @@ class Register extends \yii\db\ActiveRecord
 
     public function beforeSave($insert) {
         $this->generateAuthKey();
-        $this->setPassword($this->password);
+        $this->setPassword($this->password);//This sets the password_hash generated from the user password.
         $this->created_at = date("Ymd");
         $this->updated_at = date("Ymd");
         return true;

@@ -1,7 +1,7 @@
 <?php
 
 namespace app\controllers;
-
+use yii;
 use app\models\Register;
 use app\models\RegisterSearch;
 use yii\web\Controller;
