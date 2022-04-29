@@ -19,21 +19,28 @@ class ApiorderController extends ActiveController {
     const STATUS_CANCELLED = 6;
 
     public function behaviors() {
-        return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
-                'class' => HttpBasicAuth::className(),
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'view', 'create', 'delete', 'update', 'getall', 'shipments', 'delivery', 'cancel', 'update-status', 'returned', 'new-order'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-        ]);
+        // return ArrayHelper::merge(parent::behaviors(), [
+        //     'authenticator' => [
+        //         'class' => HttpBasicAuth::className(),
+        //     ],
+        //     'access' => [
+        //         'class' => AccessControl::className(),
+        //         'rules' => [
+        //             [
+        //                 'actions' => ['index', 'view', 'create', 'delete', 'update', 'getall', 'shipments', 'delivery', 'cancel', 'update-status', 'returned', 'new-order'],
+        //                 'allow' => true,
+        //                 'roles' => ['@'],
+        //             ],
+        //         ],
+        //     ],
+        // ]);
+
+        $behaviors = parent::behaviors();
+        // add CORS filter
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::class,
+        ];
+        return $behaviors;
     }
 
     public function actions() {
@@ -204,7 +211,7 @@ class ApiorderController extends ActiveController {
 
     //---------------------------------------------------
 
-    public function actionNewOrder() {
+    public function actionNewOrder($idUser) {
         $query = new Query;
         $model = new Orders();
         $products = array();
@@ -212,7 +219,7 @@ class ApiorderController extends ActiveController {
         $query->select(['product.idProduct', 'product.title', 'product.unitValue', 'shopping_car.quantity'])
             ->from('product')
             ->innerJoin('shopping_car', 'product.idProduct = shopping_car.idProduct')
-            ->where(['shopping_car.idUser' => Yii::$app->user->id]);
+            ->where(['shopping_car.idUser' => $idUser]);
             $products = $query->all();
             $total = 0;
         $productsName = array();
@@ -227,9 +234,9 @@ class ApiorderController extends ActiveController {
         }
         $model->purchased_products = json_encode($producsQuantities);
         $model->totalPrice = $total;
-        $model->idUser = Yii::$app->user->id;
+        $model->idUser = $idUser;
         $model->save();
-        Yii::$app->db->createCommand()->delete('shopping_car', 'idUser = :idUser', [':idUser' => Yii::$app->user->id])->execute();
+        Yii::$app->db->createCommand()->delete('shopping_car', 'idUser = :idUser', [':idUser' => $idUser])->execute();
         return $model;
     }
 

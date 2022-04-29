@@ -52,11 +52,16 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'apiregister'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'apiregister',
+                    'extraPatterns' => [
+                        'GET login' => 'login',
+                    ]],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'apiproduct'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'apishopping',
                     'extraPatterns'=>[
                         'POST cart' => 'cart',
+                        'GET watch' => 'watch',
+                        'DELETE erase' => 'erase',
                     ]],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'apiorder',
                     'extraPatterns'=>[

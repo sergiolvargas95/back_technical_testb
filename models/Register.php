@@ -115,6 +115,10 @@ class Register extends \yii\db\ActiveRecord
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
 
     public function beforeSave($insert) {
         $this->generateAuthKey();
