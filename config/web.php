@@ -56,7 +56,10 @@ $config = [
                     'extraPatterns' => [
                         'GET login' => 'login',
                     ]],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'apiproduct'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'apiproduct',
+                        'extraPatterns' => [
+                            'GET product' => 'product',
+                        ]],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'apishopping',
                     'extraPatterns'=>[
                         'POST cart' => 'cart',
